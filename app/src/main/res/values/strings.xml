@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TimeLoop</string>
+    <string name="add_a_new_timer">Добавить новый таймер</string>
+    <string name="save">Сохранить</string>
+    <string name="timer_name">Название</string>
+    <string name="timer_name_hint">Назовите таймер</string>
+    <string name="interval">Напоминать каждые</string>
+    <string name="until">До</string>
+</resources>
