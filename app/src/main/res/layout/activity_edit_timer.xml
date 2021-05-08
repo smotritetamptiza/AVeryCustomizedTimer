@@ -31,7 +31,7 @@
 
             <EditText
                 android:id="@+id/editTextTimerName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
@@ -55,7 +55,7 @@
 
             <EditText
                 android:id="@+id/editTextInterval"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:importantForAutofill="no"
@@ -63,26 +63,6 @@
                 android:textSize="20sp" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewUntil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/until"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/editTextUntil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="time"
-                android:textSize="20sp" />
-        </TableRow>
     </TableLayout>
 
     <Button

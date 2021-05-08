@@ -6,4 +6,7 @@
     <string name="timer_name_hint">Назовите таймер</string>
     <string name="interval">Напоминать каждые</string>
     <string name="until">До</string>
+    <string name="edit_timer_button">Edit timer button</string>
+    <string name="delete_timer_button">Delete timer button</string>
+    <string name="timeFormat">%02d:%02d:%02d</string>
 </resources>
