@@ -31,10 +31,24 @@ public class MainActivity extends AppCompatActivity {
         Timer exampleTimer = new Timer("Попей водички", 1800);
         timers.add(exampleTimer);
         adapter.notifyDataSetChanged();
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("position")) {
+            if (intent.hasExtra("name") && intent.hasExtra("interval")) {
+                String name = intent.getStringExtra("name");
+                int interval = intent.getIntExtra("interval", 1800);
+                int position = intent.getIntExtra("position", -1);
+                if (position < 0) {
+                    timers.add(new Timer(name, interval));
+                } else {
+                    timers.get(position).edit(name, interval, timers.get(position).isActive());
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     public void addNewTimer(View view) {
-        // we need to create an empty timer here, I guess
         Intent intent = new Intent(this, EditTimerActivity.class);
         startActivity(intent);
     }

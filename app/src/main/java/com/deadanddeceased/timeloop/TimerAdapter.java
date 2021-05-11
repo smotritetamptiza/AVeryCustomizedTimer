@@ -47,13 +47,18 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 Intent intent = new Intent(context, EditTimerActivity.class);
                 intent.putExtra("name", currTimer.getName());
                 intent.putExtra("interval", currTimer.getSecondsTotal());
+                intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
         holder.deleteTimerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(context, "The timer is supposed to be deleted", Toast.LENGTH_SHORT).show();
-
+                if (timers.get(position).isActive()) {
+                    timers.get(position).toggleActive();
+                }
+                timers.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, timers.size());
             }
         });
     }
