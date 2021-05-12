@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Timer> timers;
     private RecyclerView timersView;
     private TimerAdapter adapter;
-
+    //timepoopa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
