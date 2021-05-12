@@ -19,7 +19,7 @@ public class Timer {
         this.secondsTotal = interval;
         this.secondsLeft = interval;
         this.isActive = true;
-        this.id = System.currentTimeMillis();
+        this.id = System.currentTimeMillis() - 2000000000;
     }
 
     public void toggleActive() {
