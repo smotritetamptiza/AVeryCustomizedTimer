@@ -12,12 +12,14 @@ public class Timer {
     private boolean isActive;
     private int secondsTotal;
     private int secondsLeft;
+    private long id;
 
     public Timer(String name, int interval) {
         this.name = name;
         this.secondsTotal = interval;
         this.secondsLeft = interval;
         this.isActive = true;
+        this.id = System.currentTimeMillis();
     }
 
     public void toggleActive() {
@@ -30,6 +32,8 @@ public class Timer {
         this.secondsLeft = interval;
         this.isActive = wasActive;
     }
+
+    public void setId(long id){this.id = id;}
 
     public Calendar getAlarmTime() {
         Calendar c = Calendar.getInstance();
@@ -47,6 +51,8 @@ public class Timer {
         return name;
     }
 
+    public long getId() {return id;}
+
     public boolean isActive() {
         return isActive;
     }
@@ -54,7 +60,7 @@ public class Timer {
     @NonNull
     @Override
     public String toString() {
-        return name + ";" + secondsTotal + ";" +
+        return id + ";" + name + ";" + secondsTotal + ";" +
                 secondsLeft +";" + isActive + ";";
     }
 
