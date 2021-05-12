@@ -67,12 +67,14 @@ public class MainActivity extends AppCompatActivity {
         timers.ensureCapacity(timersStringSet.size());
         for (String timer : timersStringSet) {
             String[] timerParts = timer.split(";");
-            int ind = Integer.parseInt(timerParts[0]);
+
+            int id = Integer.parseInt(timerParts[0]);
             String name = timerParts[1];
             int secondsTotal = Integer.parseInt(timerParts[2]);
             int secondsLeft = Integer.parseInt(timerParts[3]);
             boolean wasActive = Boolean.parseBoolean(timerParts[4]);
             Timer newTimer = new Timer(name, secondsTotal);
+            newTimer.setId(id);
             if (!wasActive) {
                 newTimer.toggleActive();
             }
