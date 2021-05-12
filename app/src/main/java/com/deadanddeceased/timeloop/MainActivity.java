@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         HashSet<String> stringTimers = timersToString();
@@ -89,12 +89,6 @@ public class MainActivity extends AppCompatActivity {
             stringTimers.add(i + ";" + timers.get(i).toString());
         }
         return stringTimers;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     public void addNewTimer(View view) {
