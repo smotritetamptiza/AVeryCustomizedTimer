@@ -29,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
         timersView = findViewById(R.id.timersRecyclerView);
         timers = new ArrayList<>();
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        Set<String> timersStringSet = new HashSet<>();
-        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
-        stringsToTimers(timersStringSet);
-
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
         timersView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,9 +69,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
+        Set<String> timersStringSet = new HashSet<>();
+        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
+        stringsToTimers(timersStringSet);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         HashSet<String> stringTimers = timersToString();
         editor.putStringSet("timers", stringTimers);
