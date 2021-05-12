@@ -1,5 +1,6 @@
 package com.deadanddeceased.timeloop;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,20 +29,17 @@ public class MainActivity extends AppCompatActivity {
         timersView.setAdapter(adapter);
         timersView.setLayoutManager(new LinearLayoutManager(this));
 
-        Timer exampleTimer = new Timer("Попей водички", 1800);
-        timers.add(exampleTimer);
-        adapter.notifyDataSetChanged();
-
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("position")) {
             if (intent.hasExtra("name") && intent.hasExtra("interval")) {
                 String name = intent.getStringExtra("name");
                 int interval = intent.getIntExtra("interval", 1800);
                 int position = intent.getIntExtra("position", -1);
+                boolean wasActive = intent.getBooleanExtra("wasActive", true);
                 if (position < 0) {
                     timers.add(new Timer(name, interval));
                 } else {
-                    timers.get(position).edit(name, interval, timers.get(position).isActive());
+                    timers.get(position).edit(name, interval, wasActive);
                 }
                 adapter.notifyDataSetChanged();
             }

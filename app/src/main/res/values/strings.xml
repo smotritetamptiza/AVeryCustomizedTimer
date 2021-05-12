@@ -12,4 +12,5 @@
     <string name="edit_error">Необходимо заполнить все поля</string>
     <string name="minutes">минут</string>
     <string name="interval_error">Неверно введен интервал</string>
+    <string name="interval_size_error">Указанный интервал слишком большой</string>
 </resources>

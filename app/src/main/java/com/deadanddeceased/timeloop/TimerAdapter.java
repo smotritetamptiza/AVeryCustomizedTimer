@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,17 +38,22 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
         Timer currTimer = timers.get(position);
         holder.timerNameView.setText(currTimer.getName());
         holder.timerSwitch.setChecked(currTimer.isActive());
-        /*holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
+        holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 currTimer.toggleActive();
             }
         });
         holder.editTimerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Toast.makeText(context, "Активный таймер будет перезапущен", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, EditTimerActivity.class);
                 intent.putExtra("name", currTimer.getName());
                 intent.putExtra("interval", currTimer.getSecondsTotal());
                 intent.putExtra("position", position);
+                intent.putExtra("wasActive", currTimer.isActive());
+                if (currTimer.isActive()) {
+                    timers.get(position).toggleActive();
+                }
                 context.startActivity(intent);
             }
         });
@@ -60,7 +66,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, timers.size());
             }
-        });*/
+        });
     }
 
     @Override
@@ -71,8 +77,8 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
     public class TimerViewHolder extends RecyclerView.ViewHolder {
         private TextView timerNameView;
         private Switch timerSwitch;
-        private Button editTimerButton;
-        private Button deleteTimerButton;
+        private ImageView editTimerButton;
+        private ImageView deleteTimerButton;
 
         public TimerViewHolder(@NonNull View itemView) {
             super(itemView);
