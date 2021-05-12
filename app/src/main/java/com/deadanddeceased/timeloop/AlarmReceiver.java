@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
+import android.se.omapi.Channel;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -25,8 +26,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             timerName = intent.getStringExtra("name");
             id = intent.getIntExtra("id", 1);
         }
-        Notification.Builder builder =
-                new Notification.Builder(context)
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context, App.CHANNEL_ID)
                         .setSmallIcon(R.mipmap.timeloop)
                         .setContentTitle(context.getString(R.string.app_name))
                         .setContentText(timerName);
