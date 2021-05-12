@@ -1,6 +1,11 @@
 package com.deadanddeceased.timeloop;
 
+import android.app.AlarmManager;
+
 import androidx.annotation.NonNull;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class Timer {
     private String name;
@@ -17,7 +22,6 @@ public class Timer {
 
     public void toggleActive() {
         isActive = !isActive;
-        tick();
     }
 
     public void edit(String name, int interval, boolean wasActive) {
@@ -27,10 +31,12 @@ public class Timer {
         this.isActive = wasActive;
     }
 
-    private void tick() {
-        if (isActive) {
-            secondsLeft--;
-        }
+    public Calendar getAlarmTime() {
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        date.setTime(date.getTime() + secondsLeft * 1000);
+        c.setTime(date);
+        return c;
     }
 
     public void setSecondsLeft(int secondsLeft) {

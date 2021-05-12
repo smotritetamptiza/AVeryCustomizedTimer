@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         timersStringSet.clear();
         timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
         stringsToTimers(timersStringSet);
+        for (int i = 0; i < timers.size(); i++) {
+            setAlarm(i);
+        }
 
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
@@ -84,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
         HashSet<String> stringTimers = timersToString();
         editor.putStringSet("timers", stringTimers);
         editor.apply();
+        for (int i = 0; i < timers.size(); i++) {
+            cancelAlarm(i);
+        }
     }
 
     private HashSet<String> timersToString() {
@@ -97,5 +105,21 @@ public class MainActivity extends AppCompatActivity {
     public void addNewTimer(View view) {
         Intent intent = new Intent(this, EditTimerActivity.class);
         startActivity(intent);
+    }
+
+    private void setAlarm(int i) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + timers.get(i).getSecondsTotal() * 1000,
+                    timers.get(i).getSecondsTotal() * 1000, pendingIntent);
+    }
+
+    private void cancelAlarm(int i) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
+        alarmManager.cancel(pendingIntent);
     }
 }
