@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         timersView = findViewById(R.id.timersRecyclerView);
         timers = new ArrayList<>();
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        Set<String> timersStringSet = new HashSet<>();
+        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
+        stringsToTimers(timersStringSet);
 
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
@@ -44,6 +53,48 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void stringsToTimers(Set<String> timersStringSet) {
+        timers.ensureCapacity(timersStringSet.size());
+        for (String timer : timersStringSet) {
+            String[] timerParts = timer.split(";");
+            int ind = Integer.parseInt(timerParts[0]);
+            String name = timerParts[1];
+            int secondsTotal = Integer.parseInt(timerParts[2]);
+            int secondsLeft = Integer.parseInt(timerParts[3]);
+            boolean wasActive = Boolean.parseBoolean(timerParts[4]);
+            Timer newTimer = new Timer(name, secondsTotal);
+            if (!wasActive) {
+                newTimer.toggleActive();
+            }
+            newTimer.setSecondsLeft(secondsLeft);
+            timers.set(ind, newTimer);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        HashSet<String> stringTimers = timersToString();
+        editor.putStringSet("timers", stringTimers);
+        editor.apply();
+    }
+
+    private HashSet<String> timersToString() {
+        HashSet<String> stringTimers = new HashSet<>();
+        for (int i = 0; i < timers.size(); i++) {
+            stringTimers.add(i + ";" + timers.get(i).toString());
+        }
+        return stringTimers;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     public void addNewTimer(View view) {

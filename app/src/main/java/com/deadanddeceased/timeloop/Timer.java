@@ -1,5 +1,7 @@
 package com.deadanddeceased.timeloop;
 
+import androidx.annotation.NonNull;
+
 public class Timer {
     private String name;
     private boolean isActive;
@@ -31,12 +33,23 @@ public class Timer {
         }
     }
 
+    public void setSecondsLeft(int secondsLeft) {
+        this.secondsLeft = secondsLeft;
+    }
+
     public String getName() {
         return name;
     }
 
     public boolean isActive() {
         return isActive;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name + ";" + secondsTotal + ";" +
+                secondsLeft +";" + isActive + ";";
     }
 
     public int getSecondsTotal() {
