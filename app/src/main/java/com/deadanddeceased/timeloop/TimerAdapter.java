@@ -37,7 +37,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
         Timer currTimer = timers.get(position);
         holder.timerNameView.setText(currTimer.getName());
         holder.timerSwitch.setChecked(currTimer.isActive());
-        holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
+        /*holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 currTimer.toggleActive();
             }
@@ -60,7 +60,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, timers.size());
             }
-        });
+        });*/
     }
 
     @Override

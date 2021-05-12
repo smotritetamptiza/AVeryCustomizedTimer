@@ -10,4 +10,6 @@
     <string name="delete_timer_button">Delete timer button</string>
     <string name="timeFormat">%02d:%02d:%02d</string>
     <string name="edit_error">Необходимо заполнить все поля</string>
+    <string name="minutes">минут</string>
+    <string name="interval_error">Неверно введен интервал</string>
 </resources>

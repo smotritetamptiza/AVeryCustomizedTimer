@@ -30,11 +30,8 @@ public class EditTimerActivity extends AppCompatActivity {
                 String name = intent.getStringExtra("name");
                 int interval = intent.getIntExtra("interval", 1800);
                 nameEdit.setText(name);
-                int hours = interval / 3600;
-                int minutes = (interval % 3600) / 60;
-                int seconds = interval % 60;
-                intervalEdit.setText(String.format(Locale.getDefault(), getString(R.string.timeFormat),
-                        hours, minutes, seconds));
+                int minutes = interval / 60;
+                intervalEdit.setText(minutes);
             }
             ind = intent.getIntExtra("position", -1);
         }
@@ -43,7 +40,13 @@ public class EditTimerActivity extends AppCompatActivity {
     public void saveTimer(View view) {
         // the actual saving
         String name = nameEdit.getText().toString();
-        int interval = 0;/*Integer.parseInt(intervalEdit.getText().toString());*/
+        int interval = 0;
+        try {
+            interval = Integer.parseInt(intervalEdit.getText().toString()) * 60;
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), R.string.interval_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (name.isEmpty() || interval == 0) {
             Toast.makeText(getApplicationContext(), R.string.edit_error, Toast.LENGTH_SHORT).show();
             return;
