@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Timer> timers;
@@ -28,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         timersView = findViewById(R.id.timersRecyclerView);
         timers = new ArrayList<>();
+
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
+        Set<String> timersStringSet = new HashSet<>();
+        timersStringSet.clear();
+        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
+        stringsToTimers(timersStringSet);
 
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
@@ -64,23 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 newTimer.toggleActive();
             }
             newTimer.setSecondsLeft(secondsLeft);
-            timers.set(ind, newTimer);
+            timers.add(newTimer);
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
-        Set<String> timersStringSet = new HashSet<>();
-        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
-        stringsToTimers(timersStringSet);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         HashSet<String> stringTimers = timersToString();
