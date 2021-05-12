@@ -14,8 +14,6 @@ import java.util.Locale;
 public class EditTimerActivity extends AppCompatActivity {
     private EditText nameEdit;
     private EditText intervalEdit;
-    private int ind = -1;
-    private boolean wasActive = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +24,6 @@ public class EditTimerActivity extends AppCompatActivity {
         intervalEdit = findViewById(R.id.editTextInterval);
 
         Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.hasExtra("name") && intent.hasExtra("interval")) {
-                String name = intent.getStringExtra("name");
-                int interval = intent.getIntExtra("interval", 1800);
-                nameEdit.setText(name);
-                int minutes = interval / 60;
-                intervalEdit.setText(minutes);
-            }
-            wasActive = intent.getBooleanExtra("wasActive", true);
-            ind = intent.getIntExtra("id", -1);
-        }
     }
 
     public void saveTimer(View view) {
@@ -62,8 +49,6 @@ public class EditTimerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("interval", interval);
-        intent.putExtra("id", ind);
-        intent.putExtra("wasActive", wasActive);
         startActivity(intent);
     }
 }
