@@ -38,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
         timersStringSet.clear();
         timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
         stringsToTimers(timersStringSet);
-        for (int i = 0; i < timers.size(); i++) {
-            setAlarm(i);
-        }
+
 
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
@@ -60,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
+        }
+        for (int i = 0; i < timers.size(); i++) {
+            setAlarm(i);
         }
     }
 
