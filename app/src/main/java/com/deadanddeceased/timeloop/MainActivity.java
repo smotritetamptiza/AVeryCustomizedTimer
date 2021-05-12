@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         timersView = findViewById(R.id.timersRecyclerView);
         timers = new ArrayList<>();
 
-        super.onResume();
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
         Set<String> timersStringSet = new HashSet<>();
         timersStringSet.clear();
@@ -77,16 +76,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preferences_file), Context.MODE_PRIVATE);
-        Set<String> timersStringSet = new HashSet<>();
-        timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
-        stringsToTimers(timersStringSet);
-        adapter.notifyDataSetChanged();
-    }*/
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -104,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return stringTimers;
     }
-
 
     public void addNewTimer(View view) {
         Intent intent = new Intent(this, EditTimerActivity.class);
