@@ -22,7 +22,7 @@
         android:id="@+id/addTimerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
+        android:layout_margin="10dp"
         android:clickable="true"
         android:contentDescription="@string/add_a_new_timer"
         android:focusable="true"
