@@ -1,5 +1,7 @@
 package com.deadanddeceased.timeloop;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -41,6 +43,19 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
         holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 currTimer.toggleActive();
+                if (currTimer.isActive()) {
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(context, AlarmReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                            System.currentTimeMillis() + timers.get(position).getSecondsTotal() * 1000,
+                            timers.get(position).getSecondsTotal() * 1000, pendingIntent);
+                } else {
+                    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(context, AlarmReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                    alarmManager.cancel(pendingIntent);
+                }
             }
         });
         holder.editTimerButton.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +77,10 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 if (timers.get(position).isActive()) {
                     timers.get(position).toggleActive();
                 }
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                alarmManager.cancel(pendingIntent);
                 timers.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, timers.size());
