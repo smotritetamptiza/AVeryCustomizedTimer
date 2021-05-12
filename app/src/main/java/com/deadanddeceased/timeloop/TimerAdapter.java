@@ -61,6 +61,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 }
             }
         });
+        /*
         holder.editTimerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Toast.makeText(context, "Активный таймер будет перезапущен", Toast.LENGTH_SHORT).show();
@@ -74,7 +75,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 }
                 context.startActivity(intent);
             }
-        });
+        });*/
         holder.deleteTimerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (timers.get(position).isActive()) {
@@ -99,14 +100,14 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
     public class TimerViewHolder extends RecyclerView.ViewHolder {
         private TextView timerNameView;
         private Switch timerSwitch;
-        private ImageView editTimerButton;
+        //private ImageView editTimerButton;
         private ImageView deleteTimerButton;
 
         public TimerViewHolder(@NonNull View itemView) {
             super(itemView);
             timerNameView = itemView.findViewById(R.id.timerName);
             timerSwitch = itemView.findViewById(R.id.timerSwitch);
-            editTimerButton = itemView.findViewById(R.id.editTimerButton);
+            //editTimerButton = itemView.findViewById(R.id.editTimerButton);
             deleteTimerButton = itemView.findViewById(R.id.deleteTimerButton);
         }
     }
