@@ -46,6 +46,9 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 if (currTimer.isActive()) {
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(context, AlarmReceiver.class);
+                    String name = currTimer.getName();
+                    intent.putExtra("name", name);
+                    intent.putExtra("id", position);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                             System.currentTimeMillis() + timers.get(position).getSecondsTotal() * 1000,

@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
     private void setAlarm(int i) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
+        String name = timers.get(i).getName();
+        intent.putExtra("name", name);
+        intent.putExtra("id", i);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                     System.currentTimeMillis() + timers.get(i).getSecondsTotal() * 1000,
