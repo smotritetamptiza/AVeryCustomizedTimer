@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Timer> timers;
     private RecyclerView timersView;
     private TimerAdapter adapter;
-
+    //timepoopa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
         timersStringSet.clear();
         timersStringSet = sharedPref.getStringSet("timers", timersStringSet);
         stringsToTimers(timersStringSet);
-        for (int i = 0; i < timers.size(); i++) {
-            setAlarm(i);
-        }
+
 
         adapter = new TimerAdapter(this, timers);
         timersView.setAdapter(adapter);
@@ -60,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
             }
+        }
+        for (int i = 0; i < timers.size(); i++) {
+            setAlarm(i);
         }
     }
 
