@@ -35,7 +35,7 @@ public class EditTimerActivity extends AppCompatActivity {
                 intervalEdit.setText(minutes);
             }
             wasActive = intent.getBooleanExtra("wasActive", true);
-            ind = intent.getIntExtra("position", -1);
+            ind = intent.getIntExtra("id", -1);
         }
     }
 
@@ -62,7 +62,7 @@ public class EditTimerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("interval", interval);
-        intent.putExtra("position", ind);
+        intent.putExtra("id", ind);
         intent.putExtra("wasActive", wasActive);
         startActivity(intent);
     }

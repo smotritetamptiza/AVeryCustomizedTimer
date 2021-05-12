@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,19 +49,19 @@ public class MainActivity extends AppCompatActivity {
             if (intent.hasExtra("name") && intent.hasExtra("interval")) {
                 String name = intent.getStringExtra("name");
                 int interval = intent.getIntExtra("interval", 1800);
-                int position = intent.getIntExtra("position", -1);
+                int id = intent.getIntExtra("id", -1);
                 boolean wasActive = intent.getBooleanExtra("wasActive", true);
-                if (position < 0) {
+                if (id == -1) {
                     timers.add(new Timer(name, interval));
-                    setAlarm(timers.size() - 1);
+                    setAlarm(timers.get(timers.size() - 1));
                 } else {
-                    timers.get(position).edit(name, interval, wasActive);
+                    int position = findTimerPosById(id);
+                    if (position >= 0) {
+                        timers.get(position).edit(name, interval, wasActive);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
-        }
-        for (int i = 0; i < timers.size(); i++) {
-            setAlarm(i);
         }
     }
 
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         timers.ensureCapacity(timersStringSet.size());
         for (String timer : timersStringSet) {
             String[] timerParts = timer.split(";");
-
             int id = Integer.parseInt(timerParts[0]);
             String name = timerParts[1];
             int secondsTotal = Integer.parseInt(timerParts[2]);
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private HashSet<String> timersToString() {
         HashSet<String> stringTimers = new HashSet<>();
         for (int i = 0; i < timers.size(); i++) {
-            stringTimers.add(i + ";" + timers.get(i).toString());
+            stringTimers.add(timers.get(i).toString());
         }
         return stringTimers;
     }
@@ -107,16 +107,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setAlarm(int i) {
+    private void setAlarm(Timer timer) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        String name = timers.get(i).getName();
+        String name = timer.getName();
         intent.putExtra("name", name);
-        intent.putExtra("id", i);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
+        intent.putExtra("id", timer.getId());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)timer.getId(), intent, 0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis() + timers.get(i).getSecondsTotal() * 1000,
-                    timers.get(i).getSecondsTotal() * 1000, pendingIntent);
+                    System.currentTimeMillis() + timer.getSecondsTotal() * 1000,
+                    timer.getSecondsTotal() * 1000, pendingIntent);
     }
 
     private void cancelAlarm(int i) {
@@ -124,5 +124,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, i, intent, 0);
         alarmManager.cancel(pendingIntent);
+    }
+
+    private int findTimerPosById(long id) {
+        for (int i = 0; i < timers.size(); i++) {
+            if (timers.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -48,15 +48,15 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                     Intent intent = new Intent(context, AlarmReceiver.class);
                     String name = currTimer.getName();
                     intent.putExtra("name", name);
-                    intent.putExtra("id", position);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                    intent.putExtra("id", currTimer.getId());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)currTimer.getId(), intent, 0);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                            System.currentTimeMillis() + timers.get(position).getSecondsTotal() * 1000,
-                            timers.get(position).getSecondsTotal() * 1000, pendingIntent);
+                            System.currentTimeMillis() + currTimer.getSecondsTotal() * 1000,
+                            currTimer.getSecondsTotal() * 1000, pendingIntent);
                 } else {
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(context, AlarmReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)currTimer.getId(), intent, 0);
                     alarmManager.cancel(pendingIntent);
                 }
             }
@@ -67,7 +67,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 Intent intent = new Intent(context, EditTimerActivity.class);
                 intent.putExtra("name", currTimer.getName());
                 intent.putExtra("interval", currTimer.getSecondsTotal());
-                intent.putExtra("position", position);
+                intent.putExtra("id", currTimer.getId());
                 intent.putExtra("wasActive", currTimer.isActive());
                 if (currTimer.isActive()) {
                     timers.get(position).toggleActive();
@@ -82,7 +82,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
                 }
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(context, AlarmReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, position, intent, 0);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)currTimer.getId(), intent, 0);
                 alarmManager.cancel(pendingIntent);
                 timers.remove(position);
                 notifyItemRemoved(position);
