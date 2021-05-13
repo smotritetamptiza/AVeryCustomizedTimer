@@ -49,17 +49,8 @@ public class MainActivity extends AppCompatActivity {
             if (intent.hasExtra("name") && intent.hasExtra("interval")) {
                 String name = intent.getStringExtra("name");
                 int interval = intent.getIntExtra("interval", 1800);
-                int id = intent.getIntExtra("id", -1);
-                boolean wasActive = intent.getBooleanExtra("wasActive", true);
-                if (id == -1) {
-                    timers.add(new Timer(name, interval));
-                    setAlarm(timers.get(timers.size() - 1));
-                } else {
-                    int position = findTimerPosById(id);
-                    if (position >= 0) {
-                        timers.get(position).edit(name, interval, wasActive);
-                    }
-                }
+                timers.add(new Timer(name, interval));
+                setAlarm(timers.get(timers.size() - 1));
                 adapter.notifyDataSetChanged();
             }
         }
