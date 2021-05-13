@@ -22,8 +22,6 @@ public class EditTimerActivity extends AppCompatActivity {
 
         nameEdit = findViewById(R.id.editTextTimerName);
         intervalEdit = findViewById(R.id.editTextInterval);
-
-        Intent intent = getIntent();
     }
 
     public void saveTimer(View view) {

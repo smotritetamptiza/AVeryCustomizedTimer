@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHolder> {
     Context context;
@@ -39,6 +40,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
     public void onBindViewHolder(@NonNull TimerViewHolder holder, int position) {
         Timer currTimer = timers.get(position);
         holder.timerNameView.setText(currTimer.getName());
+        holder.intervalView.setText(String.format(Locale.getDefault(), context.getString(R.string.each_blank_minutes), currTimer.getSecondsTotal() / 60));
         holder.timerSwitch.setChecked(currTimer.isActive());
         holder.timerSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -102,11 +104,13 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerViewHol
         private Switch timerSwitch;
         //private ImageView editTimerButton;
         private ImageView deleteTimerButton;
+        private TextView intervalView;
 
         public TimerViewHolder(@NonNull View itemView) {
             super(itemView);
             timerNameView = itemView.findViewById(R.id.timerName);
             timerSwitch = itemView.findViewById(R.id.timerSwitch);
+            intervalView = itemView.findViewById(R.id.intervalView);
             //editTimerButton = itemView.findViewById(R.id.editTimerButton);
             deleteTimerButton = itemView.findViewById(R.id.deleteTimerButton);
         }

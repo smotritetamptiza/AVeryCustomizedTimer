@@ -14,4 +14,5 @@
     <string name="interval_error">Неверно введен интервал</string>
     <string name="interval_size_error">Указанный интервал слишком большой</string>
     <string name="preferences_file">com.deadanddeceased.timeloop.PREFERENCES</string>
+    <string name="each_blank_minutes">раз в %d м.</string>
 </resources>
