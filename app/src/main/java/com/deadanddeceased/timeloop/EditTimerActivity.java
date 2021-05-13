@@ -47,6 +47,7 @@ public class EditTimerActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.edit_error, Toast.LENGTH_SHORT).show();
             return;
         }
+
         int interval = 0;
         try {
             interval = Integer.parseInt(intervalString);
@@ -62,8 +63,7 @@ public class EditTimerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("interval", interval);
-        intent.putExtra("id", ind);
-        intent.putExtra("wasActive", wasActive);
+        Toast.makeText(getApplicationContext(), name + interval, Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 }

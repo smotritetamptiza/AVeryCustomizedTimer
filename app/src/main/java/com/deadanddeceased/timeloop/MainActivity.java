@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         timersView.setLayoutManager(new LinearLayoutManager(this));
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("position")) {
+        if (intent != null) {
             if (intent.hasExtra("name") && intent.hasExtra("interval")) {
                 String name = intent.getStringExtra("name");
                 int interval = intent.getIntExtra("interval", 1800);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         timers.ensureCapacity(timersStringSet.size());
         for (String timer : timersStringSet) {
             String[] timerParts = timer.split(";");
-            int id = Integer.parseInt(timerParts[0]);
+            long id = Long.parseLong(timerParts[0]);
             String name = timerParts[1];
             int secondsTotal = Integer.parseInt(timerParts[2]);
             int secondsLeft = Integer.parseInt(timerParts[3]);
