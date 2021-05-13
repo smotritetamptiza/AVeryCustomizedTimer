@@ -34,6 +34,7 @@ public class EditTimerActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.edit_error, Toast.LENGTH_SHORT).show();
             return;
         }
+
         int interval = 0;
         try {
             interval = Integer.parseInt(intervalString);
